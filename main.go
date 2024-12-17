@@ -18,4 +18,15 @@ func main() {
 	}
 
 	services.ListClasses()
+
+	err = services.CreateBooking("Nikhil", "Trainer", "2024-12-02")
+	if err != nil {
+		fmt.Println("Error booking class:", err)
+	}
+
+	err = services.CreateBooking("Julia", "Yoga", "2024-12-06")
+	if err != nil {
+		fmt.Println("Error booking class:", err)
+	}
+	services.GetAllBookings()
 }

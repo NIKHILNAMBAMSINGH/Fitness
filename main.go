@@ -1,32 +1,35 @@
 package main
 
 import (
-	services "Fitness/Services"
+	handler "Fitness/Handler"
 	"fmt"
+	"net/http"
 )
 
+func handleClass(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case http.MethodPost:
+		handler.CreateClassHandler(w, r)
+	case http.MethodGet:
+		handler.GetClassHandler(w, r)
+	default:
+		http.Error(w, "Only get and post method are allowed", http.StatusMethodNotAllowed)
+	}
+}
+
+func handleBooking(w http.ResponseWriter, r *http.Request) {
+	switch r.Method {
+	case http.MethodPost:
+		handler.CreateBookingHandler(w, r)
+	case http.MethodGet:
+		handler.GetAllBookingsHandler(w, r)
+	default:
+		http.Error(w, "Only get and post method are allowed", http.StatusMethodNotAllowed)
+	}
+}
+
 func main() {
-
-	err := services.CreateClass("Mass Gainer", "2024-12-01", "2024-12-20", 10)
-	if err != nil {
-		fmt.Println("Error creating class:", err)
-	}
-
-	err = services.CreateClass("Yoga", "2024-12-05", "2024-12-15", 15)
-	if err != nil {
-		fmt.Println("Error creating class:", err)
-	}
-
-	services.ListClasses()
-
-	err = services.CreateBooking("Nikhil", "Trainer", "2024-12-02")
-	if err != nil {
-		fmt.Println("Error booking class:", err)
-	}
-
-	err = services.CreateBooking("Julia", "Yoga", "2024-12-06")
-	if err != nil {
-		fmt.Println("Error booking class:", err)
-	}
-	services.GetAllBookings()
+	http.HandleFunc("/", handleClass)
+	fmt.Println("Runnning on localhost:8080")
+	http.ListenAndServe(":8080", nil)
 }

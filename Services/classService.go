@@ -32,11 +32,11 @@ func CreateClass(name string, startDate time.Time, endDate time.Time, capacity i
 
 	for _, class := range classes {
 		if class.Name == name {
-			return errors.New("Class with the same name exists")
+			return errors.New("class with the same name exists")
 		}
 	}
 	if capacity < 0 {
-		return errors.New("Zero capacity is not accepted")
+		return errors.New("zero capacity is not accepted")
 	}
 
 	classNew := model.Class{

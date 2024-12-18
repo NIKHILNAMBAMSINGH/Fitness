@@ -14,7 +14,7 @@ var (
 	bookingCounter int
 )
 
-func GetAllBookings() ([]model.Booking, error) {
+func GetAllBookingss() ([]model.Booking, error) {
 	if len(bookings) == 0 {
 		return nil, errors.New("no bookings found")
 	}
@@ -37,8 +37,15 @@ func CreateBooking(name string, className string, bookingDate time.Time) error {
 			break
 		}
 	}
+
+	for _, booking := range bookings {
+		if booking.BookingMemberName == name && booking.BookingClassName == className {
+			return errors.New("duplicate booking for the same class and member")
+		}
+	}
+
 	if selectedClass == nil {
-		return fmt.Errorf("No class found for Class: %s", className)
+		return fmt.Errorf("no class found for Class: %s", className)
 	}
 	bookingCounter++
 	newBooking := model.Booking{
@@ -50,5 +57,4 @@ func CreateBooking(name string, className string, bookingDate time.Time) error {
 	bookings = append(bookings, newBooking)
 	fmt.Printf("Booked class for %s on %s for class '%s'.\n", name, newBooking.BookingDate, className)
 	return nil
-
 }

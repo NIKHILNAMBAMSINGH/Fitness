@@ -46,7 +46,7 @@ func CreateBookingHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	bookings, err := service.GetAllBookings()
+	bookings, err := service.GetAllBookingss()
 	if err != nil {
 		resp := model.ApiResponse{
 			Success: false,
@@ -73,7 +73,7 @@ func CreateBookingHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetAllBookingsHandler(w http.ResponseWriter, r *http.Request) {
-	bookings, err := service.GetAllBookings()
+	bookings, err := service.GetAllBookingss()
 	if err != nil {
 		response := model.ApiResponse{
 			Success: false,
